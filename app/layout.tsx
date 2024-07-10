@@ -4,6 +4,8 @@ import "./globals.css";
 import {ThemeProvider} from "@/components/theme-provider";
 import {cn} from "@/lib/utils";
 import {ClerkProvider} from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster"
+
 
 const font = Open_Sans({subsets: ["latin"]});
 
@@ -28,6 +30,7 @@ export default function RootLayout({
                         storageKey="discord-theme"
                     >
                         {children}
+                        <Toaster />
                     </ThemeProvider>
                 </ClerkProvider>
             </body>
