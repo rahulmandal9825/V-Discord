@@ -1,4 +1,5 @@
-import Createserver from '@/components/Createserver';
+import CreateserverModel from '@/components/model/create-server-model';
+import Createserver from '@/components/model/create-server-model';
 import { db } from '@/lib/db';
 import { initialProfile } from '@/lib/initial-profile'
 import { redirect } from 'next/navigation';
@@ -21,9 +22,9 @@ const Setup = async () => {
     
 
     if(server){
-       return redirect(`/server/${server.id}`);
+       return redirect(`/servers/${server.id}`);
     }
-  return <Createserver/>
+  return <CreateserverModel/>
 }
 
 export default Setup

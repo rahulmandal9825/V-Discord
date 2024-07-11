@@ -24,8 +24,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import FlieUplaod from './FlieUplaod';
+import FlieUplaod from '../FlieUplaod';
 import { useRouter } from 'next/navigation';
+import { useModal } from '@/hooks/use-model-store';
+import { useToast } from '../ui/use-toast';
  
 
 const formSchema = z.object({
@@ -38,34 +40,53 @@ const formSchema = z.object({
 })
   
 
-const Createserver = () => {
-
+const CreateserverModel = () => {
+    const {isOpen , onClose ,type} =useModal()
     const router = useRouter();
+    const {toast} = useToast();
+    
+   
+    const isModelOpen = isOpen && type == "createServer";
+ 
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
           name: "",
           imageUrl: ""
         },
-      })
+      });
      
       const isLoading = form.formState.isSubmitting;
       // 2. Define a submit handler.
       const onSubmit = async (values: z.infer<typeof formSchema>) => {
       try {
-
+        console.log(values);
         await axios.post("/api/servers" , values);
 
         form.reset();
         router.refresh();
-        window.location.reload();        
+        onClose()
+        toast({
+          title: "Server is Created",
+          variant: "primary",
+      });
+            
       } catch (error) {
+        toast({
+          title: "failed to created",
+          variant: "destructive",
+      });
         console.log(error);
       }
       }
+      const hanndleclose = ()=>{
+        form.reset();
+        onClose();
+      }
 
   return (
-    <Dialog open>
+    <Dialog open={isModelOpen} onOpenChange={hanndleclose}>
   <DialogContent className='bg-white text-black p-0'>
     <DialogHeader className='pt-8 px-6'>
       <DialogTitle className='text-2xl text-center font-bold'>Customise your server</DialogTitle>
@@ -121,4 +142,4 @@ const Createserver = () => {
   )
 }
 
-export default Createserver
+export default CreateserverModel
