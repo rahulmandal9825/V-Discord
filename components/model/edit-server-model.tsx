@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios  from "axios";
 import {
     Dialog,
@@ -40,13 +40,17 @@ const formSchema = z.object({
 })
   
 
-const CreateserverModel = () => {
-    const {isOpen , onClose ,type} =useModal()
+const EditserverModel = () => {
+    const {isOpen , onClose ,type ,data} =useModal()
     const router = useRouter();
     const {toast} = useToast();
+
+    const {server} = data;
     
    
-    const isModelOpen = isOpen && type == "createServer";
+    const isModelOpen = isOpen && type == "editServer";
+
+ 
  
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -56,25 +60,32 @@ const CreateserverModel = () => {
           imageUrl: ""
         },
       });
-     
+
+      useEffect(() => {
+        if(server){
+           form.setValue("name" , server.name);
+           form.setValue("imageUrl", server.imageUrl);
+        }
+       }, [server,form])
+       
       const isLoading = form.formState.isSubmitting;
       // 2. Define a submit handler.
       const onSubmit = async (values: z.infer<typeof formSchema>) => {
       try {
         console.log(values);
-        await axios.post("/api/servers" , values);
+        await axios.patch(`/api/servers/${server?.id}` , values);
 
         form.reset();
         router.refresh();
         onClose()
         toast({
-          title: "Server is Created",
+          title: "data is updated",
           variant: "primary",
       });
             
       } catch (error) {
         toast({
-          title: "failed to created",
+          title: "failed to update",
           variant: "destructive",
       });
         console.log(error);
@@ -87,7 +98,7 @@ const CreateserverModel = () => {
 
   return (
     <Dialog open={isModelOpen} onOpenChange={hanndleclose}>
-  <DialogContent className='dark:bg-zinc-800 bg-white dark:text-white text-white p-0'>
+  <DialogContent className=' dark:bg-zinc-800 bg-white dark:text-white text-white p-0'>
     <DialogHeader className='pt-8 px-6'>
       <DialogTitle className='text-2xl text-center font-bold'>Customise your server</DialogTitle>
       <DialogDescription className='text-center text-zinc-500'>
@@ -123,7 +134,7 @@ const CreateserverModel = () => {
               <FormControl>
                 <Input 
                 disabled={isLoading} 
-                className='bg-zinc-300/30 dark:text-white  border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                className='bg-zinc-300/30 dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                 placeholder="Enter Server name" {...field} />
               </FormControl>
             </FormItem>
@@ -131,7 +142,7 @@ const CreateserverModel = () => {
         />
         </div>
         <DialogFooter className=' px-6 py-4'>
-                <Button variant="primary" disabled={isLoading} className=' font-semibold text-sm p-1 bg-blue-600 text-white' >Create</Button>
+                <Button variant="primary" disabled={isLoading} className=' font-semibold text-sm p-1 bg-blue-600 text-white' >Save</Button>
         </DialogFooter>
         
       </form>
@@ -142,4 +153,4 @@ const CreateserverModel = () => {
   )
 }
 
-export default CreateserverModel
+export default EditserverModel

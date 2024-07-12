@@ -30,6 +30,9 @@ const ServerSidebar = async ({serverId}: ServerSidbarprops) => {
                 }
             },
             members:{
+                include:{
+                    profile:true,
+                },
                 orderBy:{
                     role:"asc"
                 }
@@ -44,6 +47,7 @@ const ServerSidebar = async ({serverId}: ServerSidbarprops) => {
     if (!server) {
     return redirect("/");
     }
+    console.log(server);
 
     const role = server.members.find((member) => member.profileId === profile.id)?.role;
     return(
