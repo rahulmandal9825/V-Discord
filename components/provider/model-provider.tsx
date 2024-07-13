@@ -5,6 +5,9 @@ import CreateserverModel from "../model/create-server-model";
 import InviteModel from "../model/Invite-model";
 import EditserverModel from "../model/edit-server-model";
 import ManagememberModel from "../model/manage-member";
+import CreatchannelModel from "../model/create-channel-model";
+import LeaveserverModel from "../model/leave-server-model";
+import DeleteserverModel from "../model/delete-server-model";
 
 
 export const ModelProvider = () =>{
@@ -24,6 +27,9 @@ export const ModelProvider = () =>{
         <InviteModel/>
         <EditserverModel/>
         <ManagememberModel/>
+        <CreatchannelModel/>
+        <LeaveserverModel/>
+        <DeleteserverModel/>
         </>
     )
 }

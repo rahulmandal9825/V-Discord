@@ -57,7 +57,7 @@ const InviteModel = () => {
 
   return (
     <Dialog open={isModelOpen} onOpenChange={onClose} >
-  <DialogContent className='dark:bg-zinc-800 bg-white dark:text-white text-white p-0'>
+  <DialogContent className='dark:bg-zinc-800 bg-white dark:text-white text-black p-0'>
     <DialogHeader className='pt-8 px-6'>
       <DialogTitle className='text-2xl text-center font-bold'>Invite Friends</DialogTitle>
     </DialogHeader>
@@ -65,10 +65,10 @@ const InviteModel = () => {
         <Label className='uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70'>Server invite link</Label>
         <div className='flex items-center mt-2 gap-x-2'>
             <Input 
-            className='bg-zinc-300/50 dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+            className=' bg-[#333b4b] dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
             value={inviteUrl}
             />
-            <Button className=' dark:bg-zinc-500 dark:text-white' disabled={isLoading} size="icon" onClick={onCopy} >
+            <Button className=' dark:bg-[#333b4b] dark:text-white' disabled={isLoading} size="icon" onClick={onCopy} >
                 {copied ? <Check className='h-4 w-4 '/> : <Copy className='w-4 h-4'/>}
             </Button>
         </div>

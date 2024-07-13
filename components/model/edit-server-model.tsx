@@ -98,7 +98,7 @@ const EditserverModel = () => {
 
   return (
     <Dialog open={isModelOpen} onOpenChange={hanndleclose}>
-  <DialogContent className=' dark:bg-zinc-800 bg-white dark:text-white text-white p-0'>
+  <DialogContent className=' dark:bg-zinc-800 bg-white dark:text-white text-black p-0'>
     <DialogHeader className='pt-8 px-6'>
       <DialogTitle className='text-2xl text-center font-bold'>Customise your server</DialogTitle>
       <DialogDescription className='text-center text-zinc-500'>
@@ -134,7 +134,7 @@ const EditserverModel = () => {
               <FormControl>
                 <Input 
                 disabled={isLoading} 
-                className='bg-zinc-300/30 dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                className='bg-[#333b4b] dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                 placeholder="Enter Server name" {...field} />
               </FormControl>
             </FormItem>

@@ -10,6 +10,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import qs from "query-string";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -28,6 +29,8 @@ import {ServerWithMembersWithProfile} from "@/type/Type";
 import {ScrollArea} from "../ui/scroll-area";
 import Image from "next/image";
 import { DropdownMenuPortal } from "@radix-ui/react-dropdown-menu";
+import { MemberRole } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 const ManagememberModel = () => {
     const {isOpen, onOpen, onClose, type, data} = useModal();
@@ -35,15 +38,55 @@ const ManagememberModel = () => {
     const {server} = data as {server: ServerWithMembersWithProfile};
     const [LoadingId, setLoadingId] = useState("");
 
+    const router = useRouter();
     const roleIconMap = {
         GUEST: null,
         MODERATOR: <ShieldCheck className="h-4 w-4 ml-2 text-indigo-500" />,
         ADMIN: <ShieldAlert className="h-4 w-4 text-rose-500" />,
     };
 
+
+    const Kick = async(memberId:string) => {
+        try {
+            setLoadingId(memberId);
+            const url =qs.stringifyUrl({
+                url:`/api/members/${memberId}`,
+                query:{
+                    serverId:server?.id,
+                }
+            });
+            const response =await axios.delete(url);
+            router.refresh();
+            onOpen("members" , {server: response.data});
+            setLoadingId("")
+        } catch (error) {
+            setLoadingId("")
+            console.log(error);
+        }
+    }
+
+    const onRoleChange = async(memberId:string, role:MemberRole) => {
+        try {
+            setLoadingId(memberId)
+            const url = qs.stringifyUrl({
+                url:`/api/members/${memberId}`,
+                query:{
+                    serverId: server?.id,
+                }
+            });
+            const response = await axios.patch(url , {role});
+            router.refresh();
+            onOpen("members" , {server: response.data});
+            setLoadingId("")
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Dialog open={isModelOpen} onOpenChange={onClose}>
-            <DialogContent className="dark:bg-zinc-800 bg-white dark:text-white text-white p-0">
+            <DialogContent className="dark:bg-zinc-800 bg-white dark:text-white text-black p-0">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">Manage members</DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
@@ -67,7 +110,7 @@ const ManagememberModel = () => {
                                 </div>
                                 <h1 className="text-sm text-zinc-500">{member.profile.email}</h1>
                             </div>
-                            {member.role !== "ADMIN" && (
+                            {member.role !== "ADMIN" && LoadingId !== member.id && (
                                 <div className="ml-auto ">
                                    <DropdownMenu>
                                 <DropdownMenuTrigger>
@@ -81,13 +124,13 @@ const ManagememberModel = () => {
                                         </DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem onClick={()=>onRoleChange(member.id ,"GUEST")}>
                                                     <Shield className="h-4 w-4 mr-2"/>
                                                     Guest {member.role == "GUEST" && (
                                                         <Check className="h-4 w-4 ml-auto"/>
                                                     )}
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem>
+                                                <DropdownMenuItem onClick={()=>onRoleChange(member.id ,"MODERATOR")}>
                                                     <Shield className="h-4 w-4 mr-2"/>
                                                     Moderator {member.role == "MODERATOR" && (
                                                         <ShieldCheck className="h-4 w-4 ml-auto"/>
@@ -97,7 +140,7 @@ const ManagememberModel = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
                                  <DropdownMenuSeparator/>
-                                 <DropdownMenuItem>
+                                 <DropdownMenuItem onClick={() =>Kick(member.id)}>
                                     <Gavel className="h-4 w-4 mr-2"/>
                                     Kick
                                  </DropdownMenuItem>

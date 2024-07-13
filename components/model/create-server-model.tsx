@@ -123,7 +123,7 @@ const CreateserverModel = () => {
               <FormControl>
                 <Input 
                 disabled={isLoading} 
-                className='bg-zinc-300/30 dark:text-white  border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                className='bg-[#333b4b] dark:text-white  border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                 placeholder="Enter Server name" {...field} />
               </FormControl>
             </FormItem>
