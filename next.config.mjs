@@ -11,6 +11,11 @@ const nextConfig = {
                 protocol:'https',
                 hostname:'img.clerk.com',
                 port:''
+            },
+            {
+                protocol:'https',
+                hostname:'api.dicebear.com',
+                port:''
             }
         ]
     }

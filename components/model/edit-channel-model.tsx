@@ -28,31 +28,32 @@ const formSchema = z.object({
     type: z.nativeEnum(ChannelType)
 });
 
-const CreatchannelModel = () => {
+const EditchannelModel = () => {
     const {isOpen, onClose, type , data} = useModal();
     const router = useRouter();
     const {toast} = useToast();
     const params =useParams();
-    const {channelType} = data;
+    const {channel ,server} = data;
 
-    const isModelOpen = isOpen && type == "CreateChannel";
+    const isModelOpen = isOpen && type == "editchannel";
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            type:channelType || ChannelType.TEXT,
+            type: channel?.type || ChannelType.TEXT,
         },
     });
 
     useEffect(() => {
-        if (channelType) {
-            form.setValue("type" , channelType);
+        if (channel) {
+            form.setValue("type" , channel?.type);
+            form.setValue("name", channel.name)
         } else {
             form.setValue("type" , ChannelType.TEXT);
         }
 
-    }, [channelType, form])
+    }, [channel, form])
     
 
     const isLoading = form.formState.isSubmitting;
@@ -60,12 +61,12 @@ const CreatchannelModel = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const url = qs.stringifyUrl({
-                url:"/api/channels",
+                url:`/api/channels/${channel?.id}`,
                 query:{
                     serverId: params?.serverId
                 }
             });
-            await axios.post(url,values);
+            await axios.patch(url,values);
             form.reset();
             router.refresh();
             onClose();
@@ -85,7 +86,7 @@ const CreatchannelModel = () => {
         <Dialog open={isModelOpen} onOpenChange={hanndleclose}>
             <DialogContent className="dark:bg-zinc-800 bg-white dark:text-white text-white p-0">
                 <DialogHeader className="pt-8 px-6">
-                    <DialogTitle className="text-2xl text-center font-bold">Create Channel</DialogTitle>
+                    <DialogTitle className="text-2xl text-center font-bold">Edit Channel</DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -147,7 +148,7 @@ const CreatchannelModel = () => {
                                 disabled={isLoading}
                                 className=" font-semibold text-sm p-1 bg-blue-600 text-white"
                             >
-                                Create
+                                Save
                             </Button>
                         </DialogFooter>
                     </form>
@@ -157,4 +158,4 @@ const CreatchannelModel = () => {
     );
 };
 
-export default CreatchannelModel;
+export default EditchannelModel;

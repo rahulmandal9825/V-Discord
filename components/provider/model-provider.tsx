@@ -8,6 +8,9 @@ import ManagememberModel from "../model/manage-member";
 import CreatchannelModel from "../model/create-channel-model";
 import LeaveserverModel from "../model/leave-server-model";
 import DeleteserverModel from "../model/delete-server-model";
+import DeleteChannelModel from "../model/delete-channel-model";
+import EditchannelModel from "../model/edit-channel-model";
+
 
 
 export const ModelProvider = () =>{
@@ -30,6 +33,9 @@ export const ModelProvider = () =>{
         <CreatchannelModel/>
         <LeaveserverModel/>
         <DeleteserverModel/>
+        <DeleteChannelModel/>
+        <EditchannelModel/>
+
         </>
     )
 }

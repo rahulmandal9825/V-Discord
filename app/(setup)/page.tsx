@@ -20,7 +20,6 @@ const Setup = async () => {
         }
     });
 
-    console.log(server);
     
 
     if(server){

@@ -134,7 +134,7 @@ const EditserverModel = () => {
               <FormControl>
                 <Input 
                 disabled={isLoading} 
-                className='bg-[#333b4b] dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                className='bg-zinc-200 dark:bg-[#333b4b] dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                 placeholder="Enter Server name" {...field} />
               </FormControl>
             </FormItem>

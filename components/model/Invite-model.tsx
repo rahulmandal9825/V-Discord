@@ -65,7 +65,7 @@ const InviteModel = () => {
         <Label className='uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70'>Server invite link</Label>
         <div className='flex items-center mt-2 gap-x-2'>
             <Input 
-            className=' bg-[#333b4b] dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+            className=' bg-zinc-200 dark:bg-[#333b4b] dark:text-white border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
             value={inviteUrl}
             />
             <Button className=' dark:bg-[#333b4b] dark:text-white' disabled={isLoading} size="icon" onClick={onCopy} >
