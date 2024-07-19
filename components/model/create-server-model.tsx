@@ -89,7 +89,7 @@ const CreateserverModel = () => {
     <Dialog open={isModelOpen} onOpenChange={hanndleclose}>
   <DialogContent className='dark:bg-zinc-800 bg-white dark:text-white text-black p-0'>
     <DialogHeader className='pt-8 px-6'>
-      <DialogTitle className='text-2xl text-black text-center font-bold'>Customise your server</DialogTitle>
+      <DialogTitle className='text-2xl text-black dark:text-white text-center font-bold'>Customise your server</DialogTitle>
       <DialogDescription className='text-center text-zinc-500'>
         Give your server a personality with a name and an image. You can always chnage it later.
       </DialogDescription>

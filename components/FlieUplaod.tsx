@@ -1,6 +1,6 @@
 "use client";
 import {UploadDropzone} from "@/lib/uploadthing";
-import {X} from "lucide-react";
+import {FileIcon, X} from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import {useToast} from "./ui/use-toast";
@@ -33,7 +33,28 @@ const FlieUplaod = ({onChange, value, endpoint}: FlieUplaodProps) => {
                     <X className="h-4 w-4" />
                 </button>
             </div>
-        );
+        )
+    }
+    if (value && fileType=== "pdf") {
+        return(
+            <div className=" flex flex-col items-center gap-4">
+                <FileIcon className="h-20 w-20"/>
+                <a href={value}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-2 text-xm text-indigo-500 dark:text-indigo-400 hover:underline"
+                >
+                {value}
+                </a>
+                <button
+                    onClick={() => onChange("")}
+                    className="bg-rose-500 text-white right-10  bottom-15 p-2 rounded-full absolute shadow-sm"
+                    type="button"
+                >
+                    <X className="h-6 w-6" />
+                </button>
+            </div>
+        )
     }
     return (
         <UploadDropzone

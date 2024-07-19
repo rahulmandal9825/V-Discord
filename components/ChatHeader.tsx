@@ -3,6 +3,7 @@ import React from 'react'
 import MobileNav from './MobileNav';
 import Image from 'next/image';
 import { remdomAvatar } from '@/lib/remdomAvatar';
+import { SocketIndicator } from '@/components/socket-indicator';
 
 interface ChatheaderProps {
     serverId:string;
@@ -28,6 +29,9 @@ const ChatHeader = ({
             <p className='font-semibold text-md text-black dark:text-white '>
                 {name}
             </p>
+            <div className='flex ml-auto  items-center'>
+                <SocketIndicator/>
+            </div>
             </>
             
         )}
@@ -43,6 +47,9 @@ const ChatHeader = ({
             <p className='font-semibold text-md text-black dark:text-white '>
                 {name}
             </p>
+            <div className='flex ml-auto  items-center'>
+                <SocketIndicator/>
+            </div>
             </>
             
         )}

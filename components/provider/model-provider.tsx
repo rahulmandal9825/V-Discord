@@ -10,6 +10,7 @@ import LeaveserverModel from "../model/leave-server-model";
 import DeleteserverModel from "../model/delete-server-model";
 import DeleteChannelModel from "../model/delete-channel-model";
 import EditchannelModel from "../model/edit-channel-model";
+import MessageFileModel from "../model/message-file-modal";
 
 
 
@@ -35,6 +36,7 @@ export const ModelProvider = () =>{
         <DeleteserverModel/>
         <DeleteChannelModel/>
         <EditchannelModel/>
+        <MessageFileModel/>
 
         </>
     )

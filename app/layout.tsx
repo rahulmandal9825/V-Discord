@@ -4,9 +4,10 @@ import "./globals.css";
 import {ThemeProvider} from "@/components/theme-provider";
 import {cn} from "@/lib/utils";
 import {ClerkProvider} from "@clerk/nextjs";
-import { Toaster } from "@/components/ui/toaster"
-import { ModelProvider } from "@/components/provider/model-provider";
-
+import {Toaster} from "@/components/ui/toaster";
+import {ModelProvider} from "@/components/provider/model-provider";
+import {SocketProvider} from "@/components/provider/socket-provider";
+import { QueryProvider } from "@/components/provider/query-provider";
 
 const font = Open_Sans({subsets: ["latin"]});
 
@@ -30,9 +31,13 @@ export default function RootLayout({
                         enableSystem={false}
                         storageKey="discord-theme"
                     >
-                        <ModelProvider/>
-                        {children}
-                        <Toaster />
+                        <SocketProvider>
+                            <ModelProvider />
+                            <QueryProvider>
+                             {children}
+                            </QueryProvider>
+                            <Toaster />
+                        </SocketProvider>
                     </ThemeProvider>
                 </ClerkProvider>
             </body>
