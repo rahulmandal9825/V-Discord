@@ -19,11 +19,11 @@ const FlieUplaod = ({onChange, value, endpoint}: FlieUplaodProps) => {
         return (
             <div className="relative h-[120px] w-[120px] ">
                 <Image
-                    width={200}
-                    height={200}
+                    width={300}
+                    height={300}
                     src={value}
                     alt="upload"
-                    className=" aspect-square object-cover rounded-full"
+                    className=" aspect-square object-cover  rounded-md"
                 />
                 <button
                     onClick={() => onChange("")}

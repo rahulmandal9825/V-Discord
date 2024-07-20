@@ -20,6 +20,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import qs from "query-string";
+import { useModal } from "@/hooks/use-model-store";
+import { useRouter } from "next/navigation";
 
 interface ChatitemProps {
     id: string;
@@ -34,6 +37,9 @@ interface ChatitemProps {
     isUpdated: boolean;
     socketUrl: string;
     socketQuery: Record<string, string>;
+    queryKey:string; 
+    addKey:string; 
+    updateKey:string; 
 }
 
 const roleIconMap = {
@@ -57,9 +63,24 @@ const Chatitem = ({
     isUpdated,
     socketQuery,
     socketUrl,
+    queryKey,
+    addKey,
+    updateKey,
 }: ChatitemProps) => {
     const [isEditing, setisEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
+    const fileType = fileUrl?.split(".").pop();
+    const router = useRouter();
+
+    const { onOpen } = useModal();
+
+    const isAdmin = currentMember.role === MemberRole.ADMIN;
+    const isModerator = currentMember.role === MemberRole.MODERATOR;
+    const isOwner = currentMember.id === member.id;
+    const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
+    const canEditMesssage = !deleted && isOwner && !fileUrl;
+    const isPDF = fileType === "pdf" && fileUrl;
+    const isImage = !isPDF && fileUrl;
 
 
     useEffect(() => {
@@ -88,14 +109,20 @@ const Chatitem = ({
         })
       }, [content]);
 
+
+      const isLoading = form.formState.isSubmitting;
+
       const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-          console.log(values);
-          await axios.post("/api/servers" , values);
-  
-          form.reset();
-    
-              
+        const url = qs.stringifyUrl({
+            url: `${socketUrl}/${id}`,
+            query: socketQuery,
+        });
+
+        await axios.patch(url, values);
+        setisEditing(false);
+        form.reset();
+     
         } catch (error) {
         
           console.log(error);
@@ -103,15 +130,7 @@ const Chatitem = ({
         }
       
 
-    const fileType = fileUrl?.split(".").pop();
-
-    const isAdmin = currentMember.role === MemberRole.ADMIN;
-    const isModerator = currentMember.role === MemberRole.MODERATOR;
-    const isOwner = currentMember.id === member.id;
-    const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
-    const canEditMesssage = !deleted && isOwner && !fileUrl;
-    const isPDF = fileType === "pdf" && fileUrl;
-    const isImage = !isPDF && fileUrl;
+    
 
     return (
         <div className=" relative group flex items-center hover:bg-black/5 p-4 transition w-full">
@@ -181,7 +200,9 @@ const Chatitem = ({
                                       <FormItem className="flex-1">
                                           <FormControl>
                                     <div className="relative w-full">
-                                        <Input className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                                        <Input
+                                        disabled={isLoading}
+                                         className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
                                         placeholder="Edited message" 
                                         {...field}
                                         />
@@ -191,7 +212,7 @@ const Chatitem = ({
                                       </FormItem>
                                   )}
                                   />
-                                  <Button size="sm" className=" bg-indigo-500 text-white hover:text-black w-[80px]">
+                                  <Button  disabled={isLoading} size="sm" className=" bg-indigo-500 text-white hover:text-black w-[80px]">
                                     Save
                                   </Button>
                               </form>
@@ -210,7 +231,9 @@ const Chatitem = ({
                         </ActionTooltip>
                     )}
                      <ActionTooltip label="Delete">
-                       <Trash className=" cursor-pointer ml-auto w-4 h-4 text-rose-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
+                       <Trash onClick={()=> onOpen("deleteMessage" , { apiUrl: `${socketUrl}/${id}`,
+                        query: socketQuery,
+                       })} className=" cursor-pointer ml-auto w-4 h-4 text-rose-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
                         </ActionTooltip>
                 </div>
             )}
