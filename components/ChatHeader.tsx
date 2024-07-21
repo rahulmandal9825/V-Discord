@@ -4,6 +4,7 @@ import MobileNav from './MobileNav';
 import Image from 'next/image';
 import { remdomAvatar } from '@/lib/remdomAvatar';
 import { SocketIndicator } from '@/components/socket-indicator';
+import { ChatVideoButton } from './chat/chat-video-button';
 
 interface ChatheaderProps {
     serverId:string;
@@ -48,6 +49,9 @@ const ChatHeader = ({
                 {name}
             </p>
             <div className='flex ml-auto  items-center'>
+                {type === "conversation" && (
+                    <ChatVideoButton/>
+                )}
                 <SocketIndicator/>
             </div>
             </>

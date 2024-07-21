@@ -1,5 +1,8 @@
+import ChatMessages from '@/components/chat/ChatMessages';
 import ChatHeader from '@/components/ChatHeader';
+import ChatInput from '@/components/ChatInput';
 import { currentProfile } from '@/components/current-profile';
+import { MediaRoom } from '@/components/media-room';
 import { FindOrCreateConversation } from '@/lib/conversation';
 import { db } from '@/lib/db';
 import { redirectToSignIn } from '@clerk/nextjs/server';
@@ -10,10 +13,12 @@ interface conversationprops {
   params:{
     serverId: string;
     memberId: string;
+  }, searchParams:{
+    video?: boolean;
   }
 }
 
-const Conservation = async ({params}: conversationprops) => {
+const Conservation = async ({params , searchParams}: conversationprops) => {
 
   const profile = await currentProfile();
 
@@ -48,7 +53,7 @@ const Conservation = async ({params}: conversationprops) => {
   const { memberOne , memberTwo} = conversation;
 
   const othermember = memberOne.profileId === profile.id ? memberTwo : memberOne; 
-  console.log(currentmember ,othermember);
+
 
 
   return (
@@ -60,6 +65,42 @@ const Conservation = async ({params}: conversationprops) => {
       type='conversation'
 
       />
+      {searchParams.video && (
+        <MediaRoom
+        chatId={conversation.id}
+        video={true}
+        audio={true}
+        />
+      )}
+      {!searchParams && (
+<>
+
+      <ChatMessages
+            member={currentmember}
+            chatId={conversation.id}
+            name={othermember.profile.name}
+            type="conversation"
+            apiUrl="/api/direct-messages"
+            socketUrl="/api/socket/direct-messages"
+            socketQuery={{
+              conversationId: conversation.id,
+                   }}
+            paramKey="conversationId"
+            paramValue={conversation.id}
+            />
+            <ChatInput
+                name={othermember.profile.name}
+                type="conversation"
+                apiUrl="/api/socket/direct-messages"
+                query={{
+                   conversationId:conversation.id,
+                }}
+                />
+</>
+
+      )}
+
+ 
     </div>
   )
 }
