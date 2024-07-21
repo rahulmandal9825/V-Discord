@@ -1,7 +1,6 @@
 import { currentProfile } from "@/components/current-profile";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 
 export async function PATCH(req:Request , {params}: {params:{serverId: string}}) {   
     try {

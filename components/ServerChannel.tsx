@@ -25,7 +25,7 @@ const ServerChannel = ({channel,server,role}:ServerChannelProps) => {
     const router = useRouter();
 
     const onClick = () =>{
-        router.push(`/servers/${params.serverId}/channels/${channel.id}`)
+        router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
     }
 
     const  onAction = (e:React.MouseEvent, action: ModalType) =>{

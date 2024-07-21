@@ -22,7 +22,7 @@ function Severmember({member, server}: Servermemberprops) {
     const icon = roleiconMap[member.role];
 
     const handleclick = () => {
-        router.push(`/servers/${params.serverId}/conversations/${member.id}`)
+        router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
     }
 
     return (
