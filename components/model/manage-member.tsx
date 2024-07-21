@@ -97,7 +97,7 @@ const ManagememberModel = () => {
                     {server?.members?.map((member) => (
                         <div key={member.id} className="flex items-center gap-x-2 mb-5 px-5">
                             <Image
-                                src={member.profile.imageUrl}
+                                src={member?.profile?.imageUrl}
                                 width={35}
                                 height={35}
                                 alt="memeber image"
