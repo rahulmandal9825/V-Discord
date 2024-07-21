@@ -107,4 +107,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Rahul Mandal - rahul.mandal@example.com
 
-Project Link: [https://github.com/yourusername/discord-clone](https://https://github.com/rahulmandal9825)
+Project Link: [https://github.com/rahulmandal9825/discord-clone](https://https://github.com/rahulmandal9825/V-Discord)
