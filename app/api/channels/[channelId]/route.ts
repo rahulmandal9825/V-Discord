@@ -7,8 +7,8 @@ export async function DELETE(req:Request , {params}: {params:{channelId: string}
     try {
     const profile = await currentProfile();
     const {searchParams } = new URL(req.url);
-
     const serverId = searchParams.get("serverId");
+
 
     if (!profile) {
         return new NextResponse("unaithorized", {status: 401});
@@ -17,6 +17,9 @@ export async function DELETE(req:Request , {params}: {params:{channelId: string}
     if(!params.channelId){
         return new NextResponse("channel ID Missing" , {status: 500 });
     }
+    if (!serverId) {
+        return new NextResponse("server ID Missing", { status: 500 });
+      }
 
     const server =await db.server.update({
         where: {
