@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import qs from "query-string";
 import { useModal } from "@/hooks/use-model-store";
 import { useRouter } from "next/navigation";
+import { UserAvatar } from "../user-avatar";
 
 interface ChatitemProps {
     id: string;
@@ -133,18 +134,12 @@ const Chatitem = ({
     
 
     return (
-        <div className=" relative group flex items-center hover:bg-black/5 p-4 transition w-full">
-            <div className=" group flex gap-x-2 items-start w-full">
+        <div className=" relative group flex  items-center hover:bg-black/5 p-4 transition w-full">
+            <div className={cn(" group flex gap-x-2 items-start w-full" , isOwner &&  "justify-end")}>
                 <div className=" cursor-pointer hover:drop-shadow-md transition">
-                    <Image
-                        src={member.profile.imageUrl || "/profile.webp"}
-                        width={30}
-                        height={30}
-                        alt="conversation img"
-                        className=" object-cover rounded-full mr-4 "
-                    />
+                    <UserAvatar src={member.profile.imageUrl} />
                 </div>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col ">
                     <div className="flex items-center gap-x-2">
                         <div className="flex items-center">
                             <p className="font-semibold text-sm hover:underline cursor-pointer">
@@ -224,7 +219,7 @@ const Chatitem = ({
                 </div>
             </div>
             {canDeleteMessage && (
-                <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 top-2 right-5 bg-white dark:bg-zinc-800 boeder rounded-sm ">
+                <div className={cn("hidden group-hover:flex items-center gap-x-2 absolute p-1 top-2  bg-white dark:bg-zinc-800 boeder rounded-sm " , isOwner ? " left-2" : "right-5 ")}>
                     {canEditMesssage && (
                         <ActionTooltip label="Edit">
                             <Edit onClick={() => setisEditing(true)} className=" cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />

@@ -31,6 +31,7 @@ import Image from "next/image";
 import { DropdownMenuPortal } from "@radix-ui/react-dropdown-menu";
 import { MemberRole } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { UserAvatar } from "../user-avatar";
 
 const ManagememberModel = () => {
     const {isOpen, onOpen, onClose, type, data} = useModal();
@@ -96,13 +97,7 @@ const ManagememberModel = () => {
                 <ScrollArea className="mt-8 max-h-[420px] pr-6">
                     {server?.members?.map((member) => (
                         <div key={member.id} className="flex items-center gap-x-2 mb-5 px-5">
-                            <Image
-                                src={member?.profile?.imageUrl}
-                                width={35}
-                                height={35}
-                                alt="memeber image"
-                                className=" rounded-full mr-1"
-                            />
+                          <UserAvatar src={member.profile.imageUrl} />
                             <div className="flex flex-col ">
                                 <div className="flex gap-2 items-center">
                                     <h1>{member.profile.name}</h1>

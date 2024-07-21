@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { remdomAvatar } from '@/lib/remdomAvatar';
 import { SocketIndicator } from '@/components/socket-indicator';
 import { ChatVideoButton } from './chat/chat-video-button';
+import { UserAvatar } from './user-avatar';
 
 interface ChatheaderProps {
     serverId:string;
@@ -38,14 +39,8 @@ const ChatHeader = ({
         )}
            {type === "conversation" && (
             <>
-            <Image
-            src= {imageUrl || "/profile.webp"}
-            width={30}
-            height={30}
-            alt='conversation img'
-            className=' object-cover rounded-full mr-4 '
-            />
-            <p className='font-semibold text-md text-black dark:text-white '>
+            <UserAvatar src={imageUrl || "/profile.webp"} />
+            <p className='font-semibold text-md text-black dark:text-white pl-3 '>
                 {name}
             </p>
             <div className='flex ml-auto  items-center'>
