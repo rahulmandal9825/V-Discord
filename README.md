@@ -1,6 +1,6 @@
 # Discord Clone
 
-A full-stack Discord clone featuring server and channel creation, private and public chats, real-time messaging, and video/audio calling capabilities. Built using Next.js, Prisma, PostgreSQL NEON, Socket.io, Shach, and Livekit.
+A full-stack Discord clone featuring server and channel creation, private and public chats, real-time messaging, and video/audio calling capabilities. Built using Next.js, UploadThing, Prisma, PostgreSQL NEON, Socket.io, Shach, and Livekit.
 
 
 ## Features
@@ -47,6 +47,12 @@ A full-stack Discord clone featuring server and channel creation, private and pu
     NEXT_PUBLIC_LIVEKIT_URL=your_livekit_url
     NEXT_PUBLIC_LIVEKIT_API_KEY=your_livekit_api_key
     NEXT_PUBLIC_LIVEKIT_API_SECRET=your_livekit_api_secret
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+    CLERK_SECRET_KEY+
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    UPLOADTHING_SECRET=
+    UPLOADTHING_APP_ID=
     ```
 
 4. **Set up Prisma**:
