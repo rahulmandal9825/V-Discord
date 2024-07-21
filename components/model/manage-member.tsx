@@ -116,7 +116,7 @@ const ManagememberModel = () => {
                                 <DropdownMenuTrigger>
                                     <MoreVertical className="h-5 w-5 text-zinc-700"/>
                                     </DropdownMenuTrigger>
-                                <DropdownMenuContent side="rigth">
+                                <DropdownMenuContent side="right">
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>
                                             <ShieldQuestion className="w-4h-4 mr-2"/>
